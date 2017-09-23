@@ -1,0 +1,80 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(string.IsNullOrEmpty(ViewData["Title"]?.ToString())?string.Empty:$"{ViewData["Title"]} - ")Oz Racing Corp</title>
+    <link href="~/assets/bundle.css" rel="stylesheet" />
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body>
+    <header class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo center">
+                    <img src="~/images/oz.png" />
+                </a>
+                <a href="#" data-activates="mobile-side-nav" class="button-collapse show-on-large hidden-print"><i class="fa fa-2x fa-list"></i></a>
+                @*<ul id="nav-mobile" class="right">
+                    @{
+                        Html.RenderPartial("_SiteMap");
+                    }
+                </ul>*@
+            </div>
+        </nav>
+    </header>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="black yellow-text content-padding-right">
+            <h6 class="pull-right">Welcome!, @((await UserManager.GetUserAsync(User)).FullName)</h6>
+        </div>
+    }
+    <ul class="side-nav hidden-print" id="mobile-side-nav">
+        @{
+            Html.RenderPartial("_SiteMap");
+        }
+    </ul>
+    <main class="content-padding" id="renderBodyContent">
+        @RenderBody()
+        <div id="mainApp">
+        </div>
+    </main>
+    <footer class="hidden-print">
+        <p>&copy; 2017 - OZ Racing Corp</p>
+    </footer>
+
+
+    
+    <script src="~/assets/bundle.js"></script>
+    @RenderSection("Modals", required: false)
+    @RenderSection("Scripts", required: false)
+
+    <div class="modal" id="loading-modal">
+        <div class="modal-content">
+            <span class="cssload-loader">
+                <span class="cssload-loader-inner"></span>
+            </span>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#loading-modal').modal({
+                dismissible: false
+            });
+        });
+        //$(document).ajaxStart(function () {
+        //    $('#loading-modal').modal('open');
+        //});
+
+        //$(document).ajaxComplete(function () {
+        //    $('#loading-modal').modal('close');
+        //});
+
+    </script>
+
+</body>
+</html>

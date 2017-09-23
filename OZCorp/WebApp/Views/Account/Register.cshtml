@@ -1,0 +1,107 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Account Register";
+}
+
+<h2>@ViewData["Title"].</h2>
+
+<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+
+    <div class="card">
+        <div class="card-title">
+            User Information
+        </div>
+        <div class="card-content">
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Email">
+                    <label asp-for="Email"></label>
+                    <span asp-validation-for="Email" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Password">
+                    <label asp-for="Password"></label>
+                    <span asp-validation-for="Password" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="ConfirmPassword">
+                    <label asp-for="ConfirmPassword"></label>
+                    <span asp-validation-for="ConfirmPassword" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="UserId">
+                    <label asp-for="UserId"></label>
+                    <span asp-validation-for="UserId" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="FirstName">
+                    <label asp-for="FirstName"></label>
+                    <span asp-validation-for="FirstName" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="LastName">
+                    <label asp-for="LastName"></label>
+                    <span asp-validation-for="LastName" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="MiddleName">
+                    <label asp-for="MiddleName"></label>
+                    <span asp-validation-for="MiddleName" class="red-text"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-title">
+            Company Information
+        </div>
+        <div class="card-content">
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="CompanyName">
+                    <label asp-for="CompanyName"></label>
+                    <span asp-validation-for="CompanyName" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="CompanyContact">
+                    <label asp-for="CompanyContact"></label>
+                    <span asp-validation-for="CompanyContact" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="CompanyAddress">
+                    <label asp-for="CompanyAddress"></label>
+                    <span asp-validation-for="CompanyAddress" class="red-text"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-action grey darken-3">
+            <button type="submit" class="btn yellow black-text"><span class="fa fa-user-plus"></span> Register</button>
+        </div>
+    </div>
+</form>

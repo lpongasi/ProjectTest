@@ -1,0 +1,88 @@
+@model Project.Entities.Product.Item
+
+@{
+    ViewData["Title"] = "Delete Item";
+}
+<h3>Are you sure you want to delete @Model.Name?</h3>
+<div class="card">
+    <div class="card-content">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitCost)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UnitCost)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Qty)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Qty)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitOfMeasure)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UnitOfMeasure.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.StockNo)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StockNo)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PartNo)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PartNo)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Category)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Category.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.SubCategory)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.SubCategory.Name)
+            </dd>
+        </dl>
+    </div>
+    <div class="card-action">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn" />
+                <a asp-action="Index" class="btn btn-white">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+

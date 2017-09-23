@@ -1,0 +1,149 @@
+﻿@model Project.Entities.Product.Item
+
+@{
+    ViewData["Title"] = "Edit Item";
+}
+<a class="btn" asp-action="Index"><i class="fa fa-list-alt"> </i> List Of Items</a>
+<h3>Edit Item</h3>
+<form asp-action="Edit" enctype="multipart/form-data">
+
+    <div class="card">
+        <div class="card-content">
+            <div asp-validation-summary="ModelOnly" class="red-text"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Barcode">
+                    <label asp-for="Barcode"></label>
+                    <span asp-validation-for="Barcode" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Name">
+                    <label asp-for="Name"></label>
+                    <span asp-validation-for="Name" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Description">
+                    <label asp-for="Description"></label>
+                    <span asp-validation-for="Description" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s4">
+                    <input asp-for="UnitCost">
+                    <label asp-for="UnitCost"></label>
+                    <span asp-validation-for="UnitCost" class="red-text"></span>
+                </div>
+                <div class="input-field common-field col s4">
+                    <input asp-for="Price">
+                    <label asp-for="Price"></label>
+                    <span asp-validation-for="Price" class="red-text"></span>
+                </div>
+                <div class="input-field common-field col s2">
+                    <input asp-for="Qty">
+                    <label asp-for="Qty"></label>
+                    <span asp-validation-for="Qty" class="red-text"></span>
+                </div>
+                <div class="input-field common-field col s2">
+                    <input asp-for="QtyNotification">
+                    <label asp-for="QtyNotification"></label>
+                    <span asp-validation-for="QtyNotification" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field common-field col s6">
+                    <input asp-for="StockNo">
+                    <label asp-for="StockNo"></label>
+                    <span asp-validation-for="StockNo" class="red-text"></span>
+                </div>
+                <div class="input-field common-field col s6">
+                    <input asp-for="PartNo">
+                    <label asp-for="PartNo"></label>
+                    <span asp-validation-for="PartNo" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Location">
+                    <label asp-for="Location"></label>
+                    <span asp-validation-for="Location" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input asp-for="PurPro" class="filled-in">
+                    <label asp-for="PurPro"></label>
+                    <span asp-validation-for="PurPro" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input asp-for="NotForSale" class="filled-in">
+                    <label asp-for="NotForSale"></label>
+                    <span asp-validation-for="NotForSale" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input asp-for="IsPrivate" class="filled-in">
+                    <label asp-for="IsPrivate"></label>
+                    <span asp-validation-for="IsPrivate" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row" id="categoryManagement"
+                 selectedCategory="@(Model?.CategoryId??0)"
+                 selectedSubCategory="@(Model?.SubCategoryId??0)"
+                 selectedUnit="@(Model?.UomId??0)"
+                 selectedSize="@(Model?.SizeId??0)">
+            </div>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>Upload Image</span>
+                    <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            @if (Model.Images.Any())
+            {
+                <img id="image" class="responsive-img materialboxed" src="@Model.Images.First().FileLocation.Replace(".", "-Orig.")" />
+            }
+            else
+            {
+                <img id="image" class="responsive-img materialboxed" />
+            }
+            <div id="historyTable" url-read="@Url.Content("~/Manage/Item/ItemHistory")/@Model.Id"></div>
+
+        </div>
+        <div class="card-action">
+            <button type="submit" class="btn">
+                Edit <span class="fa fa-pencil"> </span>
+            </button>
+            <a class="btn btn-white" asp-action="Index">Cancel</a>
+        </div>
+    </div>
+</form>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            document.getElementById("imageUpload").onchange = function () {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // get loaded data and render thumbnail.
+                    document.getElementById("image").src = e.target.result;
+                    $('.materialboxed').materialbox();
+                };
+                // read the image file as a data URL.
+                reader.readAsDataURL(this.files[0]);
+            };
+            $('.materialboxed').materialbox();
+        });
+    </script>
+}

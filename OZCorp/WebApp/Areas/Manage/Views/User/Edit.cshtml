@@ -1,0 +1,136 @@
+﻿@model UpdateUserViewModel
+@{
+    ViewData["Title"] = "Account Edit";
+}
+
+<h2>@ViewData["Title"].</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="card">
+        <div class="card-title truncate">
+            @Model.Email
+        </div>
+        <div class="card-content">
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="UserId">
+                    <label asp-for="UserId"></label>
+                    <span asp-validation-for="UserId" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="FirstName">
+                    <label asp-for="FirstName"></label>
+                    <span asp-validation-for="FirstName" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="LastName">
+                    <label asp-for="LastName"></label>
+                    <span asp-validation-for="LastName" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="MiddleName">
+                    <label asp-for="MiddleName"></label>
+                    <span asp-validation-for="MiddleName" class="red-text"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-title">
+            Company Information
+        </div>
+        <div class="card-content">
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="CompanyName">
+                    <label asp-for="CompanyName"></label>
+                    <span asp-validation-for="CompanyName" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="CompanyContact">
+                    <label asp-for="CompanyContact"></label>
+                    <span asp-validation-for="CompanyContact" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="CompanyAddress">
+                    <label asp-for="CompanyAddress"></label>
+                    <span asp-validation-for="CompanyAddress" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Discount">
+                    <label asp-for="Discount"></label>
+                    <span asp-validation-for="Discount" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Tax">
+                    <label asp-for="Tax"></label>
+                    <span asp-validation-for="Tax" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="OtherRemarks">
+                    <label asp-for="OtherRemarks"></label>
+                    <span asp-validation-for="OtherRemarks" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="OtherFees">
+                    <label asp-for="OtherFees"></label>
+                    <span asp-validation-for="OtherFees" class="red-text"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-title">
+            User Roles
+        </div>
+        <div class="card-content">
+            @foreach (var role in (IEnumerable<Role>)ViewData["Roles"])
+            {
+                <div class="col">
+                    <input type="checkbox" class="filled-in" id="@role.Id" name="roles[]" value="@role.Id" @(Model.Roles.Any(r => r.Equals(role.Id)) ? "checked='checked'" : string.Empty) />
+                    <label for="@role.Id">@role.Description</label>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <div id="historyTable" url-read="@Url.Content("~/Manage/User/UserHistory")/@Model.Id"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-action grey darken-3">
+            <button type="submit" class="btn"><span class="fa fa-user-circle-o"></span> Update</button>
+            <a href="@Url.Action("Index")" class="btn btn-white">Cancel</a>
+        </div>
+    </div>
+</form>

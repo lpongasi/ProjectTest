@@ -1,0 +1,49 @@
+@model MyCart
+
+
+
+@{
+    ViewData["Title"] = "Update";
+}
+<h4><span class="fa fa-cart-arrow-down"></span>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col s12 m3 l4"></div>
+    <div class="col s12 m6 l4">
+        <h5>@Model.Item.Name</h5>
+        <form asp-action="UpdateItem" method="post">
+            <input asp-for="ItemId" type="hidden"/>
+            <div class="card">
+                <div class="card-content">
+                    <dl>
+                        <dt>Description:</dt>
+                        <dd class="flow-text">@Model.Item.Description</dd>
+                        <dt>Price:</dt>
+                        <dd>@Model.Item.Price.ToString("N2")</dd>
+                    </dl>
+                    <div class="input-field common-field">
+                        <input asp-for="Quantity" />
+                        <label asp-for="Quantity"></label>
+                    </div>
+                    <dl>
+                        <dt>Total Price:</dt>
+                        <dd id="totalPrice">@((Model.Item.Price * Model.Quantity).ToString("N2"))</dd>
+                    </dl>
+                </div>
+                <div class="card-action">
+                    <button name="action" value="update" class="btn"><span class="fa fa-edit"></span> Update</button>
+                    <button name="action" value="remove" class="btn btn-red"><span class="fa fa-times"></span> Remove</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col s12 m3 l4"></div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#Quantity").on("change", function (e) {
+                $("#totalPrice").empty().append((parseFloat(e.target.value) * @Model.Item.Price).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            });
+         });
+    </script>
+}

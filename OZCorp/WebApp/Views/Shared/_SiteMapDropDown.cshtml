@@ -1,0 +1,13 @@
+﻿@{ 
+    var management = "Management";
+    var invoice = "Invoice";
+}
+<div id="managementDropdown" class="modal">
+    <div class="modal-heading">
+        <span class="fa fa-gears"> </span> Management
+    </div>
+    <div class="modal-content center-align">
+       <a class="btn btn-large" asp-area="Manage" asp-controller="Item" asp-action="Index"><span class="fa fa-list"> </span> Items</a>
+       <a class="btn btn-large" asp-area="Manage" asp-controller="User" asp-action="Index"><span class="fa fa-users"> </span> User Accounts</a>   
+    </div>
+</div>

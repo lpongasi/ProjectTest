@@ -1,0 +1,18 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<li><a asp-controller="Home" asp-action="Index"><span class="fa fa-home"> </span> Home</a></li>
+<li><a class="dropdown-button" href="#!" data-activates="mobilemanagementDropdown"> <span class="fa fa-list-ul"> </span> Management</a></li>
+<li><a class="dropdown-button" href="#!" data-activates="mobileinvoiceDropdown"> <span class="fa fa-file-archive-o"> </span> Invoice</a></li>
+@if (SignInManager.IsSignedIn(User))
+{
+    <li><a asp-controller="Manage" asp-action="Index" title="Manage"><span class="fa fa-gear"> </span> Hello @UserManager.GetUserName(User)!</a></li>
+    <li>
+        <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right"></form>
+        <a onclick="document.getElementById('logoutForm').submit()"><span class="fa fa-sign-out"> </span> Sign out</a>
+    </li>
+}
+else
+{
+    <li><a asp-controller="Account" asp-action="Register"><span class="fa fa-registered"> </span> Register</a></li>
+    <li><a asp-controller="Account" asp-action="Login"><span class="fa fa-sign-in"> </span> Log in</a></li>
+}

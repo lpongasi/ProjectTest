@@ -1,0 +1,17 @@
+﻿
+<li><a asp-area="" asp-controller="Home" asp-action="Index"><span class="fa fa-home"> </span> Home</a></li>
+<li><a class="dropdown-button" href="#managementDropdown"> <span class="fa fa-gears"> </span> Management</a></li>
+@*<li><a class="dropdown-button" href="#!" data-activates="invoiceDropdown"> <span class="fa fa-file-archive-o"> </span> Invoice</a></li>*@
+@if (SignInManager.IsSignedIn(User))
+{
+    <li>
+        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right"></form>
+        <a onclick="document.getElementById('logoutForm').submit()"><span class="fa fa-sign-out"> </span> Sign out</a>
+    </li>
+    <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage"><span class="fa fa-user-circle"> </span> Settings <span class="fa fa-angle-down"></span></a></li>
+
+}
+else
+{
+    <li><a asp-area="" asp-controller="Account" asp-action="Login"><span class="fa fa-sign-in"> </span> Log in</a></li>
+}

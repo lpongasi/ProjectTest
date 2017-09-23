@@ -1,0 +1,15 @@
+﻿{
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "noEmitOnError": false,
+        "removeComments": true,
+        "sourceMap": false,
+        "target": "es5",
+        "module": "es6",
+        "outDir": "ComponentsOutput",
+        "jsx": "react",
+        "moduleResolution": "node",
+        "allowJs": true,
+        "experimentalDecorators": true
+    }
+}

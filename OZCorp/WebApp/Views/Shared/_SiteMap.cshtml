@@ -1,0 +1,54 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject WebApp.Data.ApplicationDbContext AppContext
+
+@{
+
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+    var userId = UserManager.GetUserId(User);
+
+    var siteMaps = AppContext.SiteMapRoles
+    .Include(i => i.SiteMap)
+    .Include(i => i.Role)
+    .ThenInclude(ti => ti.Users)
+    .Where(w => (w.Role.Users.Any(a => a.UserId == userId) || w.SiteMap.IsPublic) && w.SiteMap.IsActive && w.SiteMap.IsVisible)
+    .Select(s => s.SiteMap)
+    .Distinct()
+    .ToList();
+
+
+    @foreach (var siteMap in siteMaps.Where(w => w.ParentId == "0" || w.ParentId == null).OrderBy(o => o.Sequence))
+    {
+
+        if (siteMap.ParentId == null)
+        {
+            <li class="@(controllerName.Equals(siteMap.Controller) ? "active" : string.Empty) sitemap-@siteMap.Id">
+                <a asp-area="@siteMap.Area" asp-controller="@siteMap.Controller" asp-action="@siteMap.Action">
+                    <span class="@siteMap.ClassIcon">
+                    </span> 
+                    <span class="status-sitemap-@siteMap.Id"></span>
+                    @siteMap.Title
+                </a>
+            </li>
+        }
+        else
+        {
+
+            var uid = Guid.NewGuid().ToString();
+            <li class="@((siteMaps.Where(w => w.ParentId == siteMap.Id).Any(a=>controllerName.Equals(a.Controller)))?"active":string.Empty)">
+                <a class="dropdown-button" data-activates='@uid'> <span class="@siteMap.ClassIcon"> </span> @siteMap.Title <span class="fa fa-arrow-down"></span></a>
+                <ul id='@uid' class='dropdown-content'>
+                    @foreach (var siteMapChild in siteMaps.Where(w => w.ParentId == siteMap.Id).OrderBy(o => o.Sequence))
+                    {
+                        <li class="@(controllerName.Equals(siteMapChild.Controller)&&actionName.Equals(siteMapChild.Action)?"active":string.Empty)"><a asp-area="@siteMapChild.Area" asp-controller="@siteMapChild.Controller" asp-action="@siteMapChild.Action"><span class="@siteMapChild.ClassIcon"> </span> @siteMapChild.Title</a></li>
+                    }
+                </ul>
+            </li>
+        }
+    }
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <li><a asp-area="" asp-controller="Account" asp-action="Login"><span class="fa fa-sign-in"> </span> Login</a></li>
+    }
+}

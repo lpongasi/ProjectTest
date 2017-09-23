@@ -1,0 +1,84 @@
+﻿@model UpdateUserViewModel
+@{
+    ViewData["Title"] = "Remove Account";
+}
+
+<h2>@ViewData["Title"]?</h2>
+
+<form asp-action="DeleteAccount" method="post">
+    <div class="card">
+        <div class="card-title truncate">
+            @Model.Email
+        </div>
+        <div class="card-content">
+            <input type="hidden" asp-for="Id" /><dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserId)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+                <dt>
+                    Company Name
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CompanyName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompanyContact)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CompanyContact)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompanyAddress)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CompanyAddress)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Discount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Discount)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Tax)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Tax)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.OtherRemarks)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.OtherRemarks)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.OtherFees)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.OtherFees)
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-action grey darken-3">
+            <button type="submit" class="btn btn-red"><span class="fa fa-user-circle-o"></span> Remove</button>
+            <a href="@Url.Action("Index")" class="btn btn-white">Cancel</a>
+        </div>
+    </div>
+</form>

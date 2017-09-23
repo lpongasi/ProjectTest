@@ -1,0 +1,119 @@
+@model Project.Entities.Product.Item
+
+@{
+    ViewData["Title"] = "Create Item";
+}
+<a class="btn" asp-action="Index"><i class="fa fa-list-alt"> </i> List Of Items</a>
+<h3>Add New Item</h3>
+<form asp-action="Create">
+    <div class="card">
+        <div class="card-content">
+            <div asp-validation-summary="All" class="red-text"></div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Barcode">
+                    <label asp-for="Barcode"></label>
+                    <span asp-validation-for="Barcode" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Name">
+                    <label asp-for="Name"></label>
+                    <span asp-validation-for="Name" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Description">
+                    <label asp-for="Description"></label>
+                    <span asp-validation-for="Description" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s4">
+                    <input asp-for="UnitCost">
+                    <label asp-for="UnitCost"></label>
+                    <span asp-validation-for="UnitCost" class="red-text"></span>
+                </div>
+                <div class="input-field common-field col s4">
+                    <input asp-for="Price">
+                    <label asp-for="Price"></label>
+                    <span asp-validation-for="Price" class="red-text"></span>
+                </div>
+                <div class="input-field common-field col s2">
+                    <input asp-for="Qty">
+                    <label asp-for="Qty"></label>
+                    <span asp-validation-for="Qty" class="red-text"></span>
+                </div>
+                <div class="input-field common-field col s2">
+                    <input asp-for="QtyNotification">
+                    <label asp-for="QtyNotification"></label>
+                    <span asp-validation-for="QtyNotification" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field common-field col s6">
+                    <input asp-for="StockNo">
+                    <label asp-for="StockNo"></label>
+                    <span asp-validation-for="StockNo" class="red-text"></span>
+                </div>
+                <div class="input-field common-field col s6">
+                    <input asp-for="PartNo">
+                    <label asp-for="PartNo"></label>
+                    <span asp-validation-for="PartNo" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="Location">
+                    <label asp-for="Location"></label>
+                    <span asp-validation-for="Location" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input asp-for="PurPro" class="filled-in">
+                    <label asp-for="PurPro"></label>
+                    <span asp-validation-for="PurPro" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input asp-for="NotForSale" class="filled-in">
+                    <label asp-for="NotForSale"></label>
+                    <span asp-validation-for="NotForSale" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input asp-for="IsPrivate" class="filled-in">
+                    <label asp-for="IsPrivate"></label>
+                    <span asp-validation-for="IsPrivate" class="red-text"></span>
+                </div>
+            </div>
+            <div class="row" id="categoryManagement" selectedCategory="@(Model?.CategoryId??0)" selectedSubCategory="@(Model?.SubCategoryId??0)" selectedUnit="@(Model?.UomId??0)">
+            </div>
+            
+        </div>
+        <div class="card-action">
+            <button type="submit" class="btn">
+                Submit <span class="fa fa-send"> </span>
+            </button>
+            <input type="reset" value="Clear" class="btn btn-white" />
+        </div>
+    </div>
+    
+</form>
+@section scripts{
+<environment names="Development">
+    <script src="~/components/categoryManagement.js"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="~/components/categoryManagement.min.js"></script>
+</environment>
+}

@@ -1,0 +1,10 @@
+
+@{
+    ViewData["Title"] = "My Cart";
+}
+<h4><span class="fa fa-cart-arrow-down"></span>@ViewData["Title"]</h4>
+<div id="itemList"
+     url-read="@Url.Action("list")"
+     url-update="@Url.Action("update")"
+     url-delete="@Url.Action("remove")"
+     data-currentTotal="@(((decimal)ViewData["Total"]).ToString("N2"))"></div>

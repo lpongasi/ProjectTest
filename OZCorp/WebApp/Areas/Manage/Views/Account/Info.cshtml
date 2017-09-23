@@ -1,0 +1,89 @@
+﻿@model UpdateUserViewModel
+@{
+    ViewData["Title"] = "Update Info";
+}
+
+<h4><span class="fa fa-id-card"></span> @ViewData["Title"]</h4>
+
+<form asp-action="Update" method="post">
+    <div class="card">
+        <div class="card-title truncate">
+            @Model.Email
+        </div>
+        <div class="card-content">
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="UserId">
+                    <label asp-for="UserId"></label>
+                    <span asp-validation-for="UserId" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="FirstName">
+                    <label asp-for="FirstName"></label>
+                    <span asp-validation-for="FirstName" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="LastName">
+                    <label asp-for="LastName"></label>
+                    <span asp-validation-for="LastName" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="MiddleName">
+                    <label asp-for="MiddleName"></label>
+                    <span asp-validation-for="MiddleName" class="red-text"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-title">
+            Company Information
+        </div>
+        <div class="card-content">
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="CompanyName">
+                    <label asp-for="CompanyName"></label>
+                    <span asp-validation-for="CompanyName" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="CompanyContact">
+                    <label asp-for="CompanyContact"></label>
+                    <span asp-validation-for="CompanyContact" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field common-field col s12">
+                    <input asp-for="CompanyAddress">
+                    <label asp-for="CompanyAddress"></label>
+                    <span asp-validation-for="CompanyAddress" class="red-text"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <div id="historyTable" url-read="@Url.Content("~/Common/UserHistory")/@Model.Id"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-action grey darken-3">
+            <button type="submit" class="btn"><span class="fa fa-user-circle-o"></span> Update</button>
+            <a href="@Url.Action("Index")" class="btn btn-white">Cancel</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,104 @@
+@using Project.Models.JobOrder
+@model JOViewModel
+@{
+    Layout = "_PrintLayout";
+    ViewData["Title"] = Model.IdString;
+    var backgroundYellow = "background-color:#FFFF01";
+}
+
+
+<table width="800"  cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <td>
+                <img src="~/images/logo.png" width="200" />  <br /><br />
+                @Model.MainCompanyName<br />
+                @Model.MainCompanyAddress<br />
+                @Model.MainCompanyContact<br />
+            </td>
+            <td style="text-align:right">
+                <h2>Purchase Order</h2>
+                <table  style="width:100%;text-align:center;">
+                    <thead>
+                        <tr>
+                            <th style="@backgroundYellow">PO Number</th>
+                        </tr>
+                        <tr>
+                            <th>@Model.IdString</th>
+                        </tr>
+                        <tr>
+                            <th style="@backgroundYellow">JO Status</th>
+                        </tr>
+                        <tr>
+                            <th>@Model.JoStatus</th>
+                        </tr>
+                        <tr>
+                            <th style="@backgroundYellow">BILL TO</th>
+                        </tr>
+                    </thead>
+                    <tbody  style="text-align:left;">
+                        <tr>
+                            <td>@Model.CompanyName</td>
+                        </tr>
+                        <tr>
+                            <td>@Model.CompanyAddress</td>
+                        </tr>
+                        <tr>
+                            <td>@Model.CompanyContact</td>
+                        </tr>
+                        <tr>
+                            <td>@Model.FullName</td>
+                        </tr>
+                        <tr>
+                            <td>@Model.Email</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <table  style="width:100%;" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="text-align:right">
+                                <hr />
+                            </th>
+                        </tr>
+                        <tr style="@backgroundYellow">
+                            <th>Barcode</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>QTY</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th colspan="7" style="text-align:right">
+                                <hr />
+                            </th>
+                        </tr>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.Barcode</td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td style="text-align:right">@item.Qty</td>
+                                <td></td>
+                            </tr>
+                        }
+                        <tr>
+                            <th colspan="7" style="text-align:right">
+                                <hr />
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

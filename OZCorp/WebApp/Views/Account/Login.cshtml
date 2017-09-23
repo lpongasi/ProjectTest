@@ -1,0 +1,47 @@
+﻿@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="row">
+    <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <div class="col s12 m3 l4"></div>
+        <div class="col s12 m6 l4">
+            <h3><span class="fa fa-user-circle-o"></span>  @ViewData["Title"]</h3>
+            <div class="card z-depth-5 center-block">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="input-field common-field s6">
+                            <input asp-for="Email">
+                            <label asp-for="Email"></label>
+                            <span asp-validation-for="Email" class="red-text"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field common-field s6">
+                            <input asp-for="Password">
+                            <label asp-for="Password"></label>
+                            <span asp-validation-for="Password" class="red-text"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s6">
+                            <input asp-for="RememberMe">
+                            <label asp-for="RememberMe"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <button type="submit" class="btn yellow black-text"><span class="fa fa-sign-in"></span> Log in</button>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m3 l4"></div>
+    </form>
+</div>
+
+@*@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}*@

@@ -1,0 +1,17 @@
+{
+  "name": "asp.net",
+  "private": true,
+    "dependencies": {
+        "jquery": "^3.2.1",
+        "jquery-ui": "^1.12.1",
+        "jquery-validation": "1.16.0",
+        "jquery-validation-unobtrusive": "3.2.6",
+        "fontawesome": "4.7.0",
+        "materialize": "v0.98.1",
+        "react": "v15.5.4"
+    },
+  "resolutions": {
+    "materialize": "v0.98.1",
+    "react": "v15.5.4"
+  }
+}

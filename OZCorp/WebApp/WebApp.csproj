@@ -1,0 +1,100 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <UserSecretsId>aspnet-WebApp-40b130da-21f7-48b3-9e06-e17b16043ba5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ComponentsOutput\**" />
+    <Compile Remove="wwwroot\fonts\**" />
+    <Compile Remove="wwwroot\uploads\image\**" />
+    <Content Remove="ComponentsOutput\**" />
+    <Content Remove="wwwroot\fonts\**" />
+    <Content Remove="wwwroot\uploads\image\**" />
+    <EmbeddedResource Remove="ComponentsOutput\**" />
+    <EmbeddedResource Remove="wwwroot\fonts\**" />
+    <EmbeddedResource Remove="wwwroot\uploads\image\**" />
+    <None Remove="ComponentsOutput\**" />
+    <None Remove="wwwroot\fonts\**" />
+    <None Remove="wwwroot\uploads\image\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="tsconfig.json" />
+    <Content Remove="wwwroot/images\oz - Copy.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Migrations\ozrcorp0416.sql" />
+    <None Remove="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Remove="Properties\PublishProfiles\CustomProfile2.pubxml" />
+    <None Remove="Properties\PublishProfiles\FolderProfile1.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\images\logo.png" />
+    <Content Include="wwwroot\images\no-image-Orig.png" />
+    <Content Include="wwwroot\images\no-image.png" />
+    <Content Include="wwwroot\images\oz orig.png" />
+    <Content Include="wwwroot\images\oz.png" />
+    <Content Include="wwwroot\images\sq1.jpg" />
+    <Content Include="wwwroot\images\sq2.jpg" />
+    <Content Include="wwwroot\images\w1.jpg" />
+    <Content Include="wwwroot\images\w2.jpg" />
+    <Content Include="wwwroot\js\ninja-slider.js" />
+    <Content Include="wwwroot\scss\bundle.scss" />
+    <Content Include="wwwroot\scss\components\_box.scss" />
+    <Content Include="wwwroot\scss\components\_loader.scss" />
+    <Content Include="wwwroot\scss\components\_main.scss" />
+    <Content Include="wwwroot\scss\components\_modalimage.scss" />
+    <Content Include="wwwroot\scss\components\_ninja-slider.scss" />
+    <Content Include="wwwroot\scss\components\_table.scss" />
+    <Content Include="wwwroot\scss\components\_variables.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\scss\site.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="Magick.NET.Core-Q8" Version="7.0.5.502" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="1.1.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Project.Common\Project.Common.csproj" />
+    <ProjectReference Include="..\Project.Entities\Project.Entities.csproj" />
+    <ProjectReference Include="..\Project.Models\Project.Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
+</Project>

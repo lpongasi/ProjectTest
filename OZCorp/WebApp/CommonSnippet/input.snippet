@@ -1,0 +1,31 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>input</Title>
+    <Author>Loucris Pongasi</Author>
+    <Shortcut>input</Shortcut>
+    <Description>Markup snippet for an input element</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+      <SnippetType>SurroundsWith</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>name</ID>
+        <ToolTip>name</ToolTip>
+        <Default>name</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="html">
+      <![CDATA[
+      <div class="row">
+		    <div class="input-field common-field col s12">
+			    <input asp-for="$name$">
+			    <label asp-for="$name$"></label>
+			    <span asp-validation-for="$name$" class="red-text"></span>
+		    </div>
+      </div>
+	$end$]]></Code>
+  </Snippet>
+</CodeSnippet>
