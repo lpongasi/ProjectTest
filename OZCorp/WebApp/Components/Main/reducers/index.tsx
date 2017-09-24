@@ -8,6 +8,7 @@ import ManageUser from './manageUser';
 import Warehouse from './warehouse';
 import PurchaseReport from './purchaseReport';
 import CompanyPurchaseReport from './companyPurchaseReport';
+import ItemBlock from './itemBlock';
 
 const allreducers = combineReducers({
     jobOrder: JobOrder,
@@ -18,7 +19,8 @@ const allreducers = combineReducers({
     manageUser: ManageUser,
     warehouse: Warehouse,
     purchaseReport: PurchaseReport,
-    companyPurchaseReport: CompanyPurchaseReport
+    companyPurchaseReport: CompanyPurchaseReport,
+    itemBlock: ItemBlock
 });
 
 export default allreducers;

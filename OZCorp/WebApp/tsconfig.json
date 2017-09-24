@@ -1,15 +1,32 @@
 ﻿{
-    "compilerOptions": {
-        "noImplicitAny": false,
-        "noEmitOnError": false,
-        "removeComments": true,
-        "sourceMap": false,
-        "target": "es5",
-        "module": "es6",
-        "outDir": "ComponentsOutput",
-        "jsx": "react",
-        "moduleResolution": "node",
-        "allowJs": true,
-        "experimentalDecorators": true
-    }
+  //"files": [
+  //  "Configs/global.ts",
+  //  "Configs/webpack.ts",
+  //  "webpack.config.ts"
+  //],
+  "compileOnSave": true,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es5",
+    "jsx": "react",
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmit": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "skipDefaultLibCheck": true,
+    "sourceMap": false,
+    "strict": false,
+    "noEmitOnError": false,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "lib": [ "es5", "es6", "dom" ]
+  },
+  "exclude": [
+    "bin",
+    "node_modules"
+  ]
 }

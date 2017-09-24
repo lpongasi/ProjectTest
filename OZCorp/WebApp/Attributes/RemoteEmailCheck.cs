@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp.Attributes
+namespace Project.Common.Attributes
 {
     public class RemoteEmailCheck : RemoteAttribute
     {

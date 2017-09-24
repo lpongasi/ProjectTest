@@ -1,5 +1,4 @@
-﻿
-//Box
+﻿//Box
 $box-spacing: 5px;
 $box-content-color: #FFFF00;
 $box-content-main-color: #000000;
@@ -7,6 +6,16 @@ $box-content-main-color: #000000;
 .box {
     position: relative;
     width: 100%;
+
+    .input-field {
+        display: none;
+    }
+
+    .editable {
+        .input-field {
+            display: block;
+        }
+    }
 
     &-item {
         position: relative;
@@ -41,25 +50,12 @@ $box-content-main-color: #000000;
                     left: 33.33%;
                 }
 
-                .logo-input {
-                    position: absolute;
-                    left: 0;
-                    bottom: 50px;
-
-                    .btn {
-                        padding: 0px 5px;
-                        border-radius: 0px;
-                    }
-                }
-
-                .back-input {
+                .box-inputs {
                     position: absolute;
                     bottom: 0;
                     left: 0;
-
-                    .btn {
-                        padding: 0px 5px;
-                        border-radius: 0px;
+                    .btn{
+                        border-radius:0px;
                     }
                 }
             }

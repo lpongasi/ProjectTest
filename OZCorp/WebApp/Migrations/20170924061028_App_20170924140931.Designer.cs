@@ -9,9 +9,10 @@ using Project.Common.Enums;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170924061028_App_20170924140931")]
+    partial class App_20170924140931
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1");
@@ -141,8 +142,6 @@ namespace WebApp.Migrations
                     b.Property<string>("GroupId");
 
                     b.Property<string>("BackgroundUrl");
-
-                    b.Property<DateTime>("DateCreated");
 
                     b.Property<string>("ItemUrl");
 

@@ -15,16 +15,12 @@
   <ItemGroup>
     <Compile Remove="ComponentsOutput\**" />
     <Compile Remove="wwwroot\fonts\**" />
-    <Compile Remove="wwwroot\uploads\image\**" />
     <Content Remove="ComponentsOutput\**" />
     <Content Remove="wwwroot\fonts\**" />
-    <Content Remove="wwwroot\uploads\image\**" />
     <EmbeddedResource Remove="ComponentsOutput\**" />
     <EmbeddedResource Remove="wwwroot\fonts\**" />
-    <EmbeddedResource Remove="wwwroot\uploads\image\**" />
     <None Remove="ComponentsOutput\**" />
     <None Remove="wwwroot\fonts\**" />
-    <None Remove="wwwroot\uploads\image\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,30 +33,6 @@
     <None Remove="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Remove="Properties\PublishProfiles\CustomProfile2.pubxml" />
     <None Remove="Properties\PublishProfiles\FolderProfile1.pubxml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="wwwroot\images\logo.png" />
-    <Content Include="wwwroot\images\no-image-Orig.png" />
-    <Content Include="wwwroot\images\no-image.png" />
-    <Content Include="wwwroot\images\oz orig.png" />
-    <Content Include="wwwroot\images\oz.png" />
-    <Content Include="wwwroot\images\sq1.jpg" />
-    <Content Include="wwwroot\images\sq2.jpg" />
-    <Content Include="wwwroot\images\w1.jpg" />
-    <Content Include="wwwroot\images\w2.jpg" />
-    <Content Include="wwwroot\js\ninja-slider.js" />
-    <Content Include="wwwroot\scss\bundle.scss" />
-    <Content Include="wwwroot\scss\components\_box.scss" />
-    <Content Include="wwwroot\scss\components\_loader.scss" />
-    <Content Include="wwwroot\scss\components\_main.scss" />
-    <Content Include="wwwroot\scss\components\_modalimage.scss" />
-    <Content Include="wwwroot\scss\components\_ninja-slider.scss" />
-    <Content Include="wwwroot\scss\components\_table.scss" />
-    <Content Include="wwwroot\scss\components\_variables.scss">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\scss\site.scss" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.2" />
@@ -89,12 +61,25 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="wwwroot\js\ninja-slider.js" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\site.min.js" />
+    <None Include="wwwroot\scss\bundle.scss" />
+    <None Include="wwwroot\scss\components\_box.scss" />
+    <None Include="wwwroot\scss\components\_loader.scss" />
+    <None Include="wwwroot\scss\components\_main.scss" />
+    <None Include="wwwroot\scss\components\_modalimage.scss" />
+    <None Include="wwwroot\scss\components\_ninja-slider.scss" />
+    <None Include="wwwroot\scss\components\_table.scss" />
+    <None Include="wwwroot\scss\components\_variables.scss" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Project.Common\Project.Common.csproj" />
     <ProjectReference Include="..\Project.Entities\Project.Entities.csproj" />
     <ProjectReference Include="..\Project.Models\Project.Models.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\uploads\" />
+    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
 </Project>

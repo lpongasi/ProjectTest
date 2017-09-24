@@ -1,43 +1,56 @@
-﻿
-import * as React from 'react';
-import * as $ from 'jquery';
+﻿import * as React from 'react';
 import { connect } from 'react-redux';
-import Dispatcher from '../../actions';
-import { homeSetting } from '../../stateprops';
-import {
-    Link
-    } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { api, MethodType } from '../../../Common/api';
+import { Box, BoxItem, BoxBig, BoxGroup } from '../box';
 
-@connect(homeSetting, Dispatcher)
-export default class Home extends React.Component<any, any>{
-    componentDidMount(): void {
-        $.post('/Manage/HomeSetting/Ads', null, result => this.props.Dispatch('HOMESETTING_ADS', result)).done(() => $('.slider').slider());
-        $.post('/Manage/HomeSetting/CanEdit', null, result => this.props.Dispatch('HOMESETTING_CANEDIT', result.success));
+class Home extends React.Component<any, any>{
+    componentDidMount() {
+        api('ITEMBLOCK_LIST', MethodType.Get, '/itemblocks/list');
     }
     render() {
-        var align = ['center-align', 'left-align', 'right-align'];
+        const { list, blockTypes } = this.props.blocks;
+        console.log(this.props);
         return (
             <div>
-                {this.props.homeSetting.edit
-                ?<div className="fixed-action-btn">
-                        <Link to="/Manage/HomeSetting" className="btn-floating btn-large yellow waves-circle waves-effect">
-                            <i className="fa fa-edit fa-2x black-text"></i>
-                        </Link>
-                    </div>
-                    :<span></span>}
-                <div className="slider fullscreen">
-                    <ul className="slides">
-                        {this.props.homeSetting.listAds.map((item: any, i: any) =>
-                            <li key={item.id}>
-                                <img src={item.fileLocation} alt={item.title} />
-                                <div className={'caption ' + align[(i + 1) % 3]}>
-                                    <h3 className="black-text stroke-base">{item.title}</h3>
-                                    <h5 className="black-text stroke-base">{item.subTitle}</h5>
-                                </div>
-                            </li>)}
-                    </ul>
+                <div className="row">
+                    <h4>Select Blocks To Create!</h4>
+                    {blockTypes.map(item =>
+                        <a
+                            key={item.id}
+                            className="waves-effect waves-light btn"
+                            onClick={() => api('ITEMBLOCK_ADD', MethodType.Get, `/itemblocks/CreateBlock?type=${item.id}`)}
+                        >{item.name}</a>)}
                 </div>
+                <Box>
+                    {list.map(items =>
+                        <div key={items[0].groupId}>{(items.length <= 1
+                            ? <BoxItem
+                                Id={items[0].id}
+                                BoxType={BoxBig}
+                                ImageBackgroundUrl=""
+                                Content=""
+                                IsModified={false}
+                                LogoUrl="" />
+                            : <BoxItem
+                                Id={items[0].id}
+                                BoxType={BoxGroup}>
+                                {items.map(item => (
+                                    <BoxItem
+                                        key={item.id}
+                                        Id={item.id}
+                                        BoxType={item.type}
+                                    />
+                                ))}
+                            </BoxItem>
+                        )}
+                        </div>
+                    )}
+                </Box>
             </div>
         );
     }
 }
+export default withRouter(connect((state) => ({
+    blocks: state.itemBlock
+}))(Home));

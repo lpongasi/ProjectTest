@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@(string.IsNullOrEmpty(ViewData["Title"]?.ToString())?string.Empty:$"{ViewData["Title"]} - ")Oz Racing Corp</title>
-    <link href="~/assets/bundle.css" rel="stylesheet" />
+    <link href="~/assets/main.bundle.css" rel="stylesheet" />
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
@@ -48,7 +48,8 @@
 
 
     
-    <script src="~/assets/bundle.js"></script>
+    <script src="~/assets/common.bundle.js"></script>
+    <script src="~/assets/main.bundle.js"></script>
     @RenderSection("Modals", required: false)
     @RenderSection("Scripts", required: false)
 

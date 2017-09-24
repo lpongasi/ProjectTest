@@ -11,6 +11,7 @@ using Project.Entities.Cart;
 using Project.Entities.Global;
 using Project.Entities.Product;
 using Project.Entities.UserReports;
+using Project.Entities.Block;
 
 namespace WebApp.Data
 {
@@ -51,11 +52,16 @@ namespace WebApp.Data
         public DbSet<Notification> Notification { get; set; }
         public DbSet<UserNotification> UserNotification { get; set; }
         public DbSet<GlobalImage> GlobalImages { get; set; }
-
+        public DbSet<ItemBlock> ItemBlocks { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<ItemBlock>().HasKey(key => new
+            {
+                key.Id,
+                key.GroupId
+            });
             builder.Entity<PurchaseOrderItem>().HasKey(key => new
             {
                 key.PurchaseOrderId,

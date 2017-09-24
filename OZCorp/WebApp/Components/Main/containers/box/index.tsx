@@ -1,4 +1,5 @@
 ﻿import * as React from 'react';
+
 const Style = {
     createImage(imageUrl: string): object {
         return {
@@ -21,23 +22,27 @@ const Style = {
 
 //CENTER LOGO 
 //100 X 100
+
 export const BoxTall = 'tall';
 export const BoxBig = 'big';
 export const BoxWide = 'wide';
 export const BoxMedium = 'medium';
 export const BoxGroup = 'big-group';
 
-class BoxProps {
+export class BoxProps {
     public constructor(boxProps: BoxProps) {
         this.BoxType = boxProps.BoxType ? boxProps.BoxType : BoxMedium;
-        this.ImageBackgroundUrl = boxProps.ImageBackgroundUrl && this.BoxType != BoxGroup ? boxProps.ImageBackgroundUrl : this.BoxType != BoxGroup ? '/images/w1.jpg' : null;
+        this.ImageBackgroundUrl = boxProps.ImageBackgroundUrl && this.BoxType != BoxGroup ? boxProps.ImageBackgroundUrl : this.BoxType != BoxGroup ? '/images/no-image-Orig.png' : null;
         this.LogoUrl = boxProps.LogoUrl;
         this.Content = boxProps.Content ? boxProps.Content : 'Content Not Available!';
+        this.IsModified = true;
     }
-    public BoxType: string;
-    public ImageBackgroundUrl: string;
-    public LogoUrl: string;
-    public Content: string;
+    public Id: string;
+    public BoxType?: string;
+    public ImageBackgroundUrl?: string;
+    public LogoUrl?: string;
+    public Content?: string;
+    public IsModified?: boolean;
 }
 export class Box extends React.Component<any, any>{
     render() {
@@ -56,7 +61,8 @@ export class BoxItem extends React.Component<BoxProps, BoxProps>{
 
         reader.onloadend = () => {
             this.setState({
-                ImageBackgroundUrl: reader.result
+                ImageBackgroundUrl: reader.result,
+                IsModified: true
             });
         }
 
@@ -68,7 +74,8 @@ export class BoxItem extends React.Component<BoxProps, BoxProps>{
 
         reader.onloadend = () => {
             this.setState({
-                LogoUrl: reader.result
+                LogoUrl: reader.result,
+                IsModified: true
             });
         }
 
@@ -76,25 +83,26 @@ export class BoxItem extends React.Component<BoxProps, BoxProps>{
     }
     render() {
         return (
-            <li className={'box-item ' + this.state.BoxType}>
+            <li className={'box-item ' + this.state.BoxType + ' editable'}>
                 <div className="content-wrapper" style={Style.createImage(this.state.ImageBackgroundUrl)}>
                     {this.props.BoxType != BoxGroup
                         ? <div className="content">
                             {this.state.LogoUrl ? <img src={this.state.LogoUrl} className="logo" /> : null}
-                            <div className="file-field input-field logo-input">
-                                <div className="btn">
-                                    <span><span className="fa fa-file-image-o"></span> Logo</span>
-                                    <input type="file" onChange={this.logoChange.bind(this)} />
+                            <div className="box-inputs">
+                                <div className="file-field input-field logo-input">
+                                    <div className="btn">
+                                        <span><span className="fa fa-file-image-o"></span> Logo</span>
+                                        <input type="file" onChange={this.logoChange.bind(this)} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="file-field input-field back-input">
-                                <div className="btn">
-                                    <span><span className="fa fa-picture-o"></span> Background</span>
-                                    <input type="file" onChange={this.backgroundChange.bind(this)} />
+                                <div className="file-field input-field back-input">
+                                    <div className="btn">
+                                        <span><span className="fa fa-picture-o"></span> Background</span>
+                                        <input type="file" onChange={this.backgroundChange.bind(this)} />
+                                    </div>
                                 </div>
+                                {(this.state.IsModified && <a className="waves-effect waves-light btn btn-save btn-green"><span className="fa fa-save"> </span> Save Changes</a>)}
                             </div>
-
-                            {this.state.Content}
                         </div>
                         : <Box> {this.props.children}</Box>}
                 </div>
