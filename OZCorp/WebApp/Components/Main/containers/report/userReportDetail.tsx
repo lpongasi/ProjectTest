@@ -47,7 +47,6 @@ export default class UserReportDetail extends React.Component<any, any>{
     render() {
         if (this.props.report.detail == null)
             return (<div></div>);
-        console.log(this.props.report.detail);
         return (
             <div className="container">
                 <Link

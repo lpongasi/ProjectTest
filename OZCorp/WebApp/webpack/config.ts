@@ -12,6 +12,7 @@ export const entry = {
         'react-router-dom',
         'jquery',
         'store',
+        'react-slick',
         //path.resolve(assetPath, 'lib', 'jquery-ui', `jquery-ui${!isProd ? '' : '.min'}.js`),
         path.resolve(assetPath, 'lib', 'jquery-validation', 'dist', `jquery.validate${!isProd ? '' : '.min'}.js`),
         path.resolve(assetPath, 'lib', 'jquery-validation-unobtrusive', `jquery.validate.unobtrusive${!isProd ? '' : '.min'}.js`),

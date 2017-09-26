@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-
+import { api, MethodType } from '../../../Common/api';
 const Style = {
     createImage(imageUrl: string): object {
         return {
@@ -35,14 +35,18 @@ export class BoxProps {
         this.ImageBackgroundUrl = boxProps.ImageBackgroundUrl && this.BoxType != BoxGroup ? boxProps.ImageBackgroundUrl : this.BoxType != BoxGroup ? '/images/no-image-Orig.png' : null;
         this.LogoUrl = boxProps.LogoUrl;
         this.Content = boxProps.Content ? boxProps.Content : 'Content Not Available!';
-        this.IsModified = true;
+        this.IsModified = false;
+        this.SavingChanges = false;
     }
     public Id: string;
+    public GroupId: string;
     public BoxType?: string;
     public ImageBackgroundUrl?: string;
     public LogoUrl?: string;
     public Content?: string;
     public IsModified?: boolean;
+    public SavingChanges?: boolean;
+    public Editable: boolean;
 }
 export class Box extends React.Component<any, any>{
     render() {
@@ -81,30 +85,63 @@ export class BoxItem extends React.Component<BoxProps, BoxProps>{
 
         reader.readAsDataURL(file);
     }
+    submit(e: React.SyntheticEvent<HTMLFormElement>) {
+        e.preventDefault();
+        var formData = new FormData(e.currentTarget);
+        this.setState({
+            SavingChanges: true
+        });
+        api('ITEMBLOCK_LIST', MethodType.Post, '/itemblocks/Update', formData, true, () => this.setState({
+            IsModified: false,
+            SavingChanges: false
+        }));
+    }
+    removeBlock(id) {
+        api('ITEMBLOCK_LIST', MethodType.Post, '/itemblocks/Remove', { id });
+    }
     render() {
         return (
-            <li className={'box-item ' + this.state.BoxType + ' editable'}>
+            <li className={'box-item ' + this.state.BoxType}>               
                 <div className="content-wrapper" style={Style.createImage(this.state.ImageBackgroundUrl)}>
+                    {(this.props.Editable &&
+                        <div className="remove-block">
+                            <a className="btn btn-red" onClick={() => this.removeBlock(this.props.Id)}><span className="fa fa-times"> </span> Remove Block</a>
+                        </div>)}
                     {this.props.BoxType != BoxGroup
                         ? <div className="content">
                             {this.state.LogoUrl ? <img src={this.state.LogoUrl} className="logo" /> : null}
-                            <div className="box-inputs">
-                                <div className="file-field input-field logo-input">
-                                    <div className="btn">
-                                        <span><span className="fa fa-file-image-o"></span> Logo</span>
-                                        <input type="file" onChange={this.logoChange.bind(this)} />
-                                    </div>
-                                </div>
-                                <div className="file-field input-field back-input">
-                                    <div className="btn">
-                                        <span><span className="fa fa-picture-o"></span> Background</span>
-                                        <input type="file" onChange={this.backgroundChange.bind(this)} />
-                                    </div>
-                                </div>
-                                {(this.state.IsModified && <a className="waves-effect waves-light btn btn-save btn-green"><span className="fa fa-save"> </span> Save Changes</a>)}
-                            </div>
+                            {(this.props.Editable &&
+                                <div>
+                                    <form onSubmit={this.submit.bind(this)} encType="multipart/form-data" >
+                                        <div className="box-inputs">
+                                            <input type="hidden" name="id" value={this.props.Id} />
+                                            <div className="row">
+                                                <div className="file-field input-field col">
+                                                    <div className="btn">
+                                                        <span><span className="fa fa-file-image-o"></span> Logo</span>
+                                                        <input type="file" name="logo" onChange={this.logoChange.bind(this)} />
+                                                    </div>
+                                                </div>
+                                                <div className="file-field input-field col">
+                                                    <div className="btn">
+                                                        <span><span className="fa fa-picture-o"></span> Background</span>
+                                                        <input type="file" name="background" onChange={this.backgroundChange.bind(this)} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {(this.state.SavingChanges && <h6>Saving changes. please wait...</h6>)}
+                                            {(this.state.IsModified && !this.state.SavingChanges && <button className="waves-effect waves-light btn btn-save btn-green" type="submit" ><span className="fa fa-save"> </span> Save Changes</button>)}
+                                        </div>
+                                    </form>
+                                </div>)}
                         </div>
-                        : <Box> {this.props.children}</Box>}
+                        : <Box>
+                            {(this.props.Editable &&
+                                <div className="remove-block">
+                                    <a className="btn btn-red" onClick={() => this.removeBlock(this.props.GroupId)}><span className="fa fa-times"> </span> Remove Block</a>
+                                </div>)}
+                            {this.props.children}
+                        </Box>}
                 </div>
             </li>);
     };

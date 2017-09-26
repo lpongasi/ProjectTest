@@ -19,17 +19,30 @@ export const api = (
     dispatchPrefix: string = 'FETCH',
     methodType: MethodType = MethodType.Get,
     url: string = '',
-    data: any = null
+    data: any = null,
+    withFile: any = false,
+    callBack: any = null
 ) => {
     dispatcher(`${dispatchPrefix}_${StateLifeCycle.Started}`);
     dispatcher(`LOADING_${StateLifeCycle.Started}`);
-    $.ajax({
-        method: methodType.toString(),
-        url: url,
-        dataType: 'json',
-        cache: false,
-        data: data ? { ...data } : {}
-    })
+    $.ajax(!withFile
+        ? {
+            method: methodType.toString(),
+            url: url,
+            dataType: 'json',
+            cache: false,
+            data: data ? { ...data } : {}
+        }
+        : {
+            url: url,
+            type: 'POST',
+            data: data,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false
+        }
+    )
         .done((data) => {
             dispatcher(`${dispatchPrefix}_${StateLifeCycle.Success}`, { ...data });
             dispatcher(`LOADING_${StateLifeCycle.End}`);
@@ -40,5 +53,8 @@ export const api = (
         })
         .always(() => {
             dispatcher(`${dispatchPrefix}_${StateLifeCycle.End}`);
+            if (callBack) {
+                callBack();
+            }
         });
 };
