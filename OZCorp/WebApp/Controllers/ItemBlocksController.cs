@@ -25,7 +25,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult List()
         {
-            var items = Context
+            var blocks = Context
                             .ItemBlocks
                             .ToList()
                             .OrderByDescending(o => o.DateCreated).Select(b =>
@@ -38,130 +38,41 @@ namespace WebApp.Controllers
                                 b.BackgroundUrl,
                                 b.LogoUrl
                             });
-            var blocks = items
-                            .GroupBy(g => g.GroupId)
-                            .Select(s => s.Select(b => b).OrderBy(o => o.Id));
-            var slideBlocks = items.Where(w => w.Type.Equals("medium") || w.Type.Equals("big"));
-            var editable = SignInManager.IsSignedIn(User) && User.IsInRole("Administrator");
+            var editable = SignInManager.IsSignedIn(User) && (User.IsInRole("Administrator") || User.IsInRole("ItemManagement"));
 
-            return Json(new { blocks, editable, slideBlocks }.ToResponse());
+            return Json(new { blocks, editable }.ToResponse());
         }
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator,ItemManagement")]
         public async Task<IActionResult> CreateBlock(BlockType type)
         {
-            var blocks = new List<ItemBlock>();
-            var groupId = Guid.NewGuid().ToString();
-            var createDate = DateTime.Now;
+            var block = new ItemBlock
+            {
+                GroupId = Guid.NewGuid().ToString(),
+                DateCreated = DateTime.Now
+            };
             switch (type)
             {
                 case BlockType.Big:
-                    blocks.Add(new ItemBlock
-                    {
-                        Type = "big",
-                        GroupId = groupId,
-                        DateCreated = createDate
-                    });
+                    block.Type = "big";
                     break;
                 case BlockType.Medium:
-                    blocks.AddRange(
-                            Enumerable.Range(1, 4).Select(s => new ItemBlock
-                            {
-                                Type = "medium",
-                                GroupId = groupId,
-                                DateCreated = createDate
-                            })
-                        );
+                    block.Type = "medium";
                     break;
                 case BlockType.Wide:
-                    blocks.AddRange(
-                            Enumerable.Range(1, 2).Select(s => new ItemBlock
-                            {
-                                Type = "wide",
-                                GroupId = groupId,
-                                DateCreated = createDate
-                            })
-                        );
+                    block.Type = "wide";
                     break;
                 case BlockType.Tall:
-                    blocks.AddRange(
-                            Enumerable.Range(1, 2).Select(s => new ItemBlock
-                            {
-                                Type = "tall",
-                                GroupId = groupId,
-                                DateCreated = createDate
-                            })
-                        );
-                    break;
-                case BlockType.TallMedium:
-                    blocks.Add(new ItemBlock
-                    {
-                        Type = "tall",
-                        GroupId = groupId
-                    });
-                    blocks.AddRange(
-                            Enumerable.Range(1, 2).Select(s => new ItemBlock
-                            {
-                                Type = "medium",
-                                GroupId = groupId,
-                                DateCreated = createDate
-                            })
-                        );
-                    break;
-                case BlockType.WideMedium:
-                    blocks.Add(new ItemBlock
-                    {
-                        Type = "wide",
-                        GroupId = groupId,
-                        DateCreated = createDate
-                    });
-                    blocks.AddRange(
-                            Enumerable.Range(1, 2).Select(s => new ItemBlock
-                            {
-                                Type = "medium",
-                                GroupId = groupId,
-                                DateCreated = createDate
-                            })
-                        );
-                    break;
-                case BlockType.MediumWide:
-                    blocks.AddRange(
-                            Enumerable.Range(1, 2).Select(s => new ItemBlock
-                            {
-                                Type = "medium",
-                                GroupId = groupId,
-                                DateCreated = createDate
-                            })
-                        );
-                    blocks.Add(new ItemBlock
-                    {
-                        Type = "wide",
-                        GroupId = groupId,
-                        DateCreated = createDate
-                    });
+                    block.Type = "tall";
                     break;
                 default:
-                    blocks.Add(new ItemBlock
-                    {
-                        Type = "big",
-                        GroupId = groupId,
-                        DateCreated = createDate
-                    });
+                    block.Type = "medium";
                     break;
             }
-            Context.ItemBlocks.AddRange(blocks);
+            Context.ItemBlocks.Add(block);
             await Context.SaveChangesAsync();
-            return Json(blocks.Select(b =>
-                            new
-                            {
-                                b.Id,
-                                b.GroupId,
-                                b.ItemUrl,
-                                b.Type,
-                                b.BackgroundUrl,
-                                b.LogoUrl
-                            }).OrderBy(o => o.Id).ToResponse());
+            return Json(block.ToResponse());
         }
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator,ItemManagement")]
         public async Task<IActionResult> Update(long id, IList<IFormFile> logo, IList<IFormFile> background)
         {
             var itemBlock = Context.ItemBlocks.SingleOrDefault(w => w.Id == id);
@@ -192,26 +103,18 @@ namespace WebApp.Controllers
             ImageManipulation.Remove(removeImages.ToArray());
             return List();
         }
-        [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Remove(string id)
+        [Authorize(Roles = "Administrator,ItemManagement")]
+        public async Task<IActionResult> Remove(long id)
         {
-            var itemBlock = Context.ItemBlocks.Where(w => w.GroupId.Equals(id));
-            if (itemBlock == null || !itemBlock.Any())
+            var itemBlock = Context.ItemBlocks.SingleOrDefault(w=>w.Id==id);
+            if (itemBlock == null)
                 return List();
             var removeFiles = new List<string>();
 
-            var removeLogosFiles = itemBlock
-                .Where(w => !string.IsNullOrWhiteSpace(w.LogoUrl))
-                .Select(s => $"{HostingEnv.WebRootPath}{s.LogoUrl}").ToList();
-
-            var removebackgroundFiles = itemBlock
-                .Where(w => !string.IsNullOrWhiteSpace(w.BackgroundUrl))
-                .Select(s => $"{HostingEnv.WebRootPath}{s.BackgroundUrl}").ToList();
-
-            if (removeLogosFiles.Any())
-                removeFiles.AddRange(removeLogosFiles);
-            if (removebackgroundFiles.Any())
-                removeFiles.AddRange(removebackgroundFiles);
+            if (!string.IsNullOrEmpty(itemBlock.LogoUrl))
+                removeFiles.Add($"{HostingEnv.WebRootPath}{itemBlock.LogoUrl}");
+            if (!string.IsNullOrEmpty(itemBlock.BackgroundUrl))
+                removeFiles.Add($"{HostingEnv.WebRootPath}{itemBlock.BackgroundUrl}");
 
             Context.ItemBlocks.RemoveRange(itemBlock);
             await Context.SaveChangesAsync();
@@ -226,9 +129,6 @@ namespace WebApp.Controllers
         Big,
         Medium,
         Wide,
-        Tall,
-        TallMedium,
-        WideMedium,
-        MediumWide,
+        Tall
     }
 }

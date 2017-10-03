@@ -17,6 +17,11 @@ $box-content-main-color: #000000;
 .box {
     position: relative;
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    display: inline-block;
+    vertical-align: top;
 
     .remove-block {
         position: absolute;

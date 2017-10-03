@@ -16,7 +16,7 @@ class Home extends React.Component<any, any>{
         api('ITEMBLOCK_LIST', MethodType.Get, '/itemblocks/list');
     }
     render() {
-        const { list, blockTypes, editable, slideBlocks } = this.props.blocks;
+        const { blocks, blockTypes, editable } = this.props.blocks;
         const isEditable = editable && this.state.modify;
         const sliderSettings = {
             dots: false,
@@ -38,13 +38,11 @@ class Home extends React.Component<any, any>{
                         : <span><span className="fa fa-edit"> </span> Edit Page</span>)}
                 </a>)}
                 {
-                    (slideBlocks.length > 0 && <div className="row">
+                    (blocks && blocks.length > 0 && <div className="row">
                         <Slider {...sliderSettings}>
-                            {list.map(items => items.map(item => (
-                                <div className="app-slider" key={`Slide-${item.id}`}>
-                                    <img src={item.backgroundUrl ? item.backgroundUrl : '/images/no-image-Orig.png'} />
-                                </div>
-                                )))}
+                            {blocks.map(item => (<div className="app-slider" key={`Slide-${item.id}`}>
+                                <img src={item.backgroundUrl ? item.backgroundUrl : '/images/no-image-Orig.png'} />
+                            </div>))}
                         </Slider>
                     </div>)
                 }
@@ -60,17 +58,15 @@ class Home extends React.Component<any, any>{
                     </div>
                 )}
                 <Box>
-                    {list.map(items => items.map(item => (
-                        <BoxItem
-                            key={item.id}
-                            GroupId={item.groupId}
-                            Id={item.id}
-                            BoxType={item.type}
-                            ImageBackgroundUrl={item.backgroundUrl}
-                            LogoUrl={item.logoUrl}
-                            Editable={isEditable}
-                        />
-                    )))}
+                    {blocks && blocks.map(item => (<BoxItem
+                        key={item.id}
+                        GroupId={item.groupId}
+                        Id={item.id}
+                        BoxType={item.type}
+                        ImageBackgroundUrl={item.backgroundUrl}
+                        LogoUrl={item.logoUrl}
+                        Editable={isEditable}
+                    />))}
                 </Box>
             </div>
         );
