@@ -1,7 +1,7 @@
-﻿import * as Store from 'store';
-
+﻿
 const initialState = {
-    blocks: Store.get('itemblock') ? Store.get('itemblock').blocks : [],
+    blocks: [],
+    slideBlocks: [],
     blockTypes: [
         { id: 0, name: 'Big' },
         { id: 1, name: 'Medium' },
@@ -17,8 +17,7 @@ export default function (state = initialState, action) {
         case 'ITEMBLOCK_LIST_SUCCESS':
             state = {
                 ...state,
-                blocks: [...action.payload.data.blocks],
-                editable: action.payload.data.editable
+                ...action.payload.data,
             }
             break;
         case 'ITEMBLOCK_ADD_SUCCESS':
@@ -29,7 +28,15 @@ export default function (state = initialState, action) {
                 ]
             }
             break;
+        case 'ITEMSLIDEBLOCK_ADD_SUCCESS':
+            state = {
+                ...state,
+                slideBlocks: [{ ...action.payload.data },
+                ...state.slideBlocks
+                ]
+            }
+            break;
     }
-    Store.set('itemblock', state);
+
     return state;
 }

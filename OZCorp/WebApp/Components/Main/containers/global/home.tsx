@@ -16,7 +16,7 @@ class Home extends React.Component<any, any>{
         api('ITEMBLOCK_LIST', MethodType.Get, '/itemblocks/list');
     }
     render() {
-        const { blocks, blockTypes, editable } = this.props.blocks;
+        const { blocks, blockTypes, editable, slideBlocks } = this.props.blocks;
         const isEditable = editable && this.state.modify;
         const sliderSettings = {
             dots: false,
@@ -37,10 +37,29 @@ class Home extends React.Component<any, any>{
                         ? <span><span className="fa fa-edit"> </span> Show Client Mode</span>
                         : <span><span className="fa fa-edit"> </span> Edit Page</span>)}
                 </a>)}
+                {(isEditable && <div className="edit-slide">
+                    <h3>Slides Show Items</h3>
+                    <h6>Note: slide show doesn't display logo </h6>
+                    <a
+                        className="waves-effect waves-light btn"
+                        onClick={() => api('ITEMSLIDEBLOCK_ADD', MethodType.Get, '/itemblocks/CreateSlideItem')}
+                    ><span className="fa fa-plus"> </span> Add New Item</a>
+                    <Box>
+                        {slideBlocks && slideBlocks.map(item => (<BoxItem
+                            key={item.id}
+                            GroupId={item.groupId}
+                            Id={item.id}
+                            BoxType={item.type}
+                            ImageBackgroundUrl={item.backgroundUrl}
+                            LogoUrl={item.logoUrl}
+                            Editable={isEditable}
+                        />))}
+                    </Box>
+                </div>)}
                 {
-                    (blocks && blocks.length > 0 && <div className="row">
+                    (!isEditable && slideBlocks && slideBlocks.length > 0 && <div className="row">
                         <Slider {...sliderSettings}>
-                            {blocks.map(item => (<div className="app-slider" key={`Slide-${item.id}`}>
+                            {slideBlocks.map(item => (<div className="app-slider" key={`Slide-${item.id}`}>
                                 <img src={item.backgroundUrl ? item.backgroundUrl : '/images/no-image-Orig.png'} />
                             </div>))}
                         </Slider>
@@ -75,37 +94,3 @@ class Home extends React.Component<any, any>{
 export default withRouter(connect((state) => ({
     blocks: state.itemBlock
 }))(Home));
-
-//{
-//    list.map(items =>
-//        <div key={items[0].groupId}>{(
-//            items.length <= 1
-//                ? <BoxItem
-//                    Id={items[0].id}
-//                    GroupId={items[0].groupId}
-//                    BoxType={BoxBig}
-//                    ImageBackgroundUrl={items[0].backgroundUrl}
-//                    LogoUrl={items[0].logoUrl}
-//                    Editable={isEditable}
-//                />
-//                : <BoxItem
-//                    Id={items[0].id}
-//                    GroupId={items[0].groupId}
-//                    BoxType={BoxGroup}
-//                    Editable={isEditable}>
-//                    {items.map(item => (
-//                        <BoxItem
-//                            key={item.id}
-//                            GroupId={item.groupId}
-//                            Id={item.id}
-//                            BoxType={item.type}
-//                            ImageBackgroundUrl={item.backgroundUrl}
-//                            LogoUrl={item.logoUrl}
-//                            Editable={isEditable}
-//                        />
-//                    ))}
-//                </BoxItem>
-//        )}
-//        </div>
-//    )
-//}

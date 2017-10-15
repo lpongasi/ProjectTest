@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Project.Entities.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Project.Common;
 
 namespace WebApp.Controllers
 {
@@ -40,14 +41,19 @@ namespace WebApp.Controllers
                             });
             var editable = SignInManager.IsSignedIn(User) && (User.IsInRole("Administrator") || User.IsInRole("ItemManagement"));
 
-            return Json(new { blocks, editable }.ToResponse());
+            return Json(new
+            {
+                blocks = blocks.Where(w=>!w.GroupId.Equals(Constants.HomeSlideGroupId)),
+                slideBlocks = blocks.Where(w=>w.GroupId.Equals(Constants.HomeSlideGroupId)),
+                editable
+            }.ToResponse());
         }
         [Authorize(Roles = "Administrator,ItemManagement")]
-        public async Task<IActionResult> CreateBlock(BlockType type)
+        public async Task<IActionResult> CreateBlock(BlockType type,string groupId = null)
         {
             var block = new ItemBlock
             {
-                GroupId = Guid.NewGuid().ToString(),
+                GroupId = groupId ?? Guid.NewGuid().ToString(),
                 DateCreated = DateTime.Now
             };
             switch (type)
@@ -72,6 +78,9 @@ namespace WebApp.Controllers
             await Context.SaveChangesAsync();
             return Json(block.ToResponse());
         }
+        [Authorize(Roles = "Administrator,ItemManagement")]
+        public async Task<IActionResult> CreateSlideItem()
+            => await CreateBlock(BlockType.Wide, Constants.HomeSlideGroupId);
         [Authorize(Roles = "Administrator,ItemManagement")]
         public async Task<IActionResult> Update(long id, IList<IFormFile> logo, IList<IFormFile> background)
         {
@@ -131,4 +140,5 @@ namespace WebApp.Controllers
         Wide,
         Tall
     }
+
 }

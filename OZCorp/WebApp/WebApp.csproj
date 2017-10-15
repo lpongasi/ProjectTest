@@ -78,8 +78,5 @@
     <ProjectReference Include="..\Project.Entities\Project.Entities.csproj" />
     <ProjectReference Include="..\Project.Models\Project.Models.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\assets\" />
-  </ItemGroup>
 
 </Project>
